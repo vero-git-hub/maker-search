@@ -11,34 +11,36 @@ import java.util.Objects;
 public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long supplier_id;
+    @Column(name = "supplier_id", nullable = false)
+    private Long supplierId;
 
-    @Column(nullable = false)
-    private String company_name;
+    @Column(name = "company_name", nullable = false)
+    private String companyName;
 
     private String website;
 
     private String location;
 
-    @Column(nullable = false)
-    private String nature_of_business;
+    @Column(name = "nature_of_business", nullable = false)
+    private String natureOfBusiness;
 
-    private String manufacturing_processes;
+    @Column(name = "manufacturing_processes")
+    private String manufacturingProcesses;
 
     public Long getSupplierId() {
-        return supplier_id;
+        return supplierId;
     }
 
-    public void setSupplierId(Long supplier_id) {
-        this.supplier_id = supplier_id;
+    public void setSupplierId(Long supplierId) {
+        this.supplierId = supplierId;
     }
 
     public String getCompanyName() {
-        return company_name;
+        return companyName;
     }
 
-    public void setCompanyName(String company_name) {
-        this.company_name = company_name;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public String getWebsite() {
@@ -58,32 +60,32 @@ public class Supplier {
     }
 
     public String getNatureOfBusiness() {
-        return nature_of_business;
+        return natureOfBusiness;
     }
 
-    public void setNatureOfBusiness(String nature_of_business) {
-        this.nature_of_business = nature_of_business;
+    public void setNatureOfBusiness(String natureOfBusiness) {
+        this.natureOfBusiness = natureOfBusiness;
     }
 
     public String getManufacturingProcesses() {
-        return manufacturing_processes;
+        return manufacturingProcesses;
     }
 
-    public void setManufacturingProcesses(String manufacturing_processes) {
-        this.manufacturing_processes = manufacturing_processes;
+    public void setManufacturingProcesses(String manufacturingProcesses) {
+        this.manufacturingProcesses = manufacturingProcesses;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o instanceof Supplier supplier) {
-            return Objects.equals(supplier_id, supplier.supplier_id);
+            return Objects.equals(supplierId, supplier.supplierId);
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(supplier_id);
+        return Objects.hash(supplierId);
     }
 }
