@@ -3,9 +3,9 @@ package org.example.makersearch.service;
 import org.example.makersearch.model.Supplier;
 import org.example.makersearch.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author v_code
@@ -21,26 +21,32 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     @Override
-    public List<Supplier> findSuppliersByLocation(String location) {
-        return supplierRepository.findByLocation(location);
+    public Page<Supplier> findSuppliersByLocation(String location, Pageable pageable) {
+        return supplierRepository.findByLocation(location, pageable);
     }
 
     @Override
-    public List<Supplier> findSuppliersByNatureOfBusiness(String natureOfBusiness) {
-        return supplierRepository.findByNatureOfBusiness(natureOfBusiness);
+    public Page<Supplier> findSuppliersByNatureOfBusiness(String natureOfBusiness, Pageable pageable) {
+        return supplierRepository.findByNatureOfBusiness(natureOfBusiness, pageable);
     }
 
     @Override
-    public List<Supplier> findSuppliersByManufacturingProcess(String manufacturingProcess) {
-        return supplierRepository.findByManufacturingProcessesContaining(manufacturingProcess);
+    public Page<Supplier> findSuppliersByManufacturingProcess(String manufacturingProcess, Pageable pageable) {
+        return supplierRepository.findByManufacturingProcessesContaining(manufacturingProcess, pageable);
     }
 
     @Override
-    public List<Supplier> findSuppliers(String location, String natureOfBusiness, String manufacturingProcess) {
-        return supplierRepository.findAll().stream()
-                .filter(supplier -> supplier.getLocation().equalsIgnoreCase(location))
-                .filter(supplier -> supplier.getNatureOfBusiness().equalsIgnoreCase(natureOfBusiness))
-                .filter(supplier -> supplier.getManufacturingProcesses().contains(manufacturingProcess))
-                .toList();
+    public Page<Supplier> findSuppliers(String location, String natureOfBusiness, String manufacturingProcess, Pageable pageable) {
+        if (location != null && natureOfBusiness != null && manufacturingProcess != null) {
+            return supplierRepository.findByLocationAndNatureOfBusinessAndManufacturingProcessesContaining(location, natureOfBusiness, manufacturingProcess, pageable);
+        } else if (location != null) {
+            return supplierRepository.findByLocation(location, pageable);
+        } else if (natureOfBusiness != null) {
+            return supplierRepository.findByNatureOfBusiness(natureOfBusiness, pageable);
+        } else if (manufacturingProcess != null) {
+            return supplierRepository.findByManufacturingProcessesContaining(manufacturingProcess, pageable);
+        } else {
+            return supplierRepository.findAll(pageable);
+        }
     }
 }

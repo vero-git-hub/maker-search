@@ -1,18 +1,19 @@
 package org.example.makersearch.service;
 
 import org.example.makersearch.model.Supplier;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * @author v_code
  **/
 public interface SupplierService {
-    List<Supplier> findSuppliersByLocation(String location);
 
-    List<Supplier> findSuppliersByNatureOfBusiness(String natureOfBusiness);
+    Page<Supplier> findSuppliersByLocation(String location, Pageable pageable);
 
-    List<Supplier> findSuppliersByManufacturingProcess(String manufacturingProcess);
+    Page<Supplier> findSuppliersByNatureOfBusiness(String natureOfBusiness, Pageable pageable);
 
-    List<Supplier> findSuppliers(String location, String natureOfBusiness, String manufacturingProcess);
+    Page<Supplier> findSuppliersByManufacturingProcess(String manufacturingProcess, Pageable pageable);
+
+    Page<Supplier> findSuppliers(String location, String natureOfBusiness, String manufacturingProcess, Pageable pageable);
 }

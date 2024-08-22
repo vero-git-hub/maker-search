@@ -1,10 +1,11 @@
 package org.example.makersearch.repository;
 
 import org.example.makersearch.model.Supplier;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
 @author v_code
@@ -12,7 +13,12 @@ import java.util.List;
 @Repository
 public interface SupplierRepository extends JpaRepository<Supplier, Long> {
 
-    List<Supplier> findByLocation(String location);
-    List<Supplier> findByNatureOfBusiness(String natureOfBusiness);
-    List<Supplier> findByManufacturingProcessesContaining(String manufacturingProcess);
+    Page<Supplier> findByLocation(String location, Pageable pageable);
+
+    Page<Supplier> findByNatureOfBusiness(String natureOfBusiness, Pageable pageable);
+
+    Page<Supplier> findByManufacturingProcessesContaining(String manufacturingProcess, Pageable pageable);
+
+    Page<Supplier> findByLocationAndNatureOfBusinessAndManufacturingProcessesContaining(
+            String location, String natureOfBusiness, String manufacturingProcesses, Pageable pageable);
 }

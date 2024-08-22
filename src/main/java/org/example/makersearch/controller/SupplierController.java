@@ -3,9 +3,10 @@ package org.example.makersearch.controller;
 import org.example.makersearch.model.Supplier;
 import org.example.makersearch.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * @author v_code
@@ -22,21 +23,12 @@ public class SupplierController {
     }
 
     @GetMapping
-    public List<Supplier> getSuppliers(
+    public Page<Supplier> getSuppliers(
             @RequestParam(required = false) String location,
             @RequestParam(required = false) String natureOfBusiness,
-            @RequestParam(required = false) String manufacturingProcess) {
+            @RequestParam(required = false) String manufacturingProcess,
+            @PageableDefault(size = 10) Pageable pageable) {
 
-        if (location != null && natureOfBusiness != null && manufacturingProcess != null) {
-            return supplierService.findSuppliers(location, natureOfBusiness, manufacturingProcess);
-        } else if (location != null) {
-            return supplierService.findSuppliersByLocation(location);
-        } else if (natureOfBusiness != null) {
-            return supplierService.findSuppliersByNatureOfBusiness(natureOfBusiness);
-        } else if (manufacturingProcess != null) {
-            return supplierService.findSuppliersByManufacturingProcess(manufacturingProcess);
-        } else {
-            return List.of();
-        }
+        return supplierService.findSuppliers(location, natureOfBusiness, manufacturingProcess, pageable);
     }
 }
