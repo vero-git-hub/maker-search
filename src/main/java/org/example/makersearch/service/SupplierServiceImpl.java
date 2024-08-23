@@ -49,4 +49,9 @@ public class SupplierServiceImpl implements SupplierService {
             return supplierRepository.findAll(pageable);
         }
     }
+
+    @Override
+    public Supplier saveSupplier(Supplier supplier) {
+        return supplierRepository.save(supplier);
+    }
 }

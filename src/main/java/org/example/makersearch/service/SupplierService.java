@@ -16,4 +16,6 @@ public interface SupplierService {
     Page<Supplier> findSuppliersByManufacturingProcess(String manufacturingProcess, Pageable pageable);
 
     Page<Supplier> findSuppliers(String location, String natureOfBusiness, String manufacturingProcess, Pageable pageable);
+
+    Supplier saveSupplier(Supplier supplier);
 }
